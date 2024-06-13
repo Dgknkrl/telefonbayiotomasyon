@@ -27,49 +27,69 @@
           <input type="number" id="add_ekran_boyutu" name="add_ekran_boyutu" placeholder="Ekran Boyutu (inç)" required>
           <input type="text" id="add_islemci" name="add_islemci" placeholder="İşlemci" required>
           <input type="number" id="add_fiyat" name="add_fiyat" placeholder="Fiyat (TL)" required>
-          <input type="file" id="add_resim" name="add_resim[]" multiple required accept="image/*"
-            onchange="checkFileCount(this)">
+          <input type="text" id="link1" name="link1" placeholder="Birinci resim adresi">
+          <input type="text" id="link2" name="link2" placeholder="İkinci resim adresi">
+          <input type="text" id="link3" name="link3" placeholder="Üçüncü resim adresi">
+          <input type="text" id="link4" name="link4" placeholder="Dördüncü resim adresi">
           <input type="number" id="add_bayi_id" name="add_bayi_id" placeholder="Bayi ID">
           <input type="number" id="add_depo_id" name="add_depo_id" placeholder="Depo ID">
           <input type="submit" value="Ekle">
         </form>
       </div>
-      
+
       <!-- Telefon ekleme işlemi -->
       <?php
       include ("../../../contact/contact.php");
 
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $marka = $_POST['add_telefon_markasi'];
-        $model = $_POST['add_telefon_modeli'];
-        $ram = $_POST['add_ram'] . " GB"; // GB eklendi
-        $hafiza = $_POST['add_hafiza'] . " GB"; // GB eklendi
-        $kamera = $_POST['add_kamera'] . " MP"; // MP eklendi
-        $ekran_boyutu = $_POST['add_ekran_boyutu'];
-        $islemci = $_POST['add_islemci'];
-        $fiyat = $_POST['add_fiyat'];
-        $depo_id = $_POST['add_depo_id'];
-
-        $sql_telefon = "INSERT INTO telefon (marka, model, fiyat) VALUES ('$marka', '$model', '$fiyat')";
-
-        if (mysqli_query($connection, $sql_telefon)) {
-          $telefon_id = mysqli_insert_id($connection);
-
-          $sql_ozellik = "INSERT INTO ozellik (id, ram, hafiza, kamera, ekran_boyutu, islemci) 
-                          VALUES ('$telefon_id' ,'$ram', '$hafiza', '$kamera', '$ekran_boyutu', '$islemci')";
-
-          if (mysqli_query($connection, $sql_ozellik)) {
-            header("Location: urun_gor.php?send_id=$telefon_id");
-            exit();
+          $marka = $_POST['add_telefon_markasi'];
+          $model = $_POST['add_telefon_modeli'];
+          $ram = $_POST['add_ram'] . " GB"; // GB eklendi
+          $hafiza = $_POST['add_hafiza'] . " GB"; // GB eklendi
+          $kamera = $_POST['add_kamera'] . " MP"; // MP eklendi
+          $ekran_boyutu = $_POST['add_ekran_boyutu'];
+          $islemci = $_POST['add_islemci'];
+          $fiyat = $_POST['add_fiyat'];
+          $depo_id = $_POST['add_depo_id'];
+          $bayi_id = $_POST['add_bayi_id'];
+          
+          // Resim linklerini alıyoruz
+          $resim1 = $_POST['link1'];
+          $resim2 = $_POST['link2'];
+          $resim3 = $_POST['link3'];
+          $resim4 = $_POST['link4'];
+      
+          // Telefon tablosuna ekleme işlemi
+          $sql_telefon = "INSERT INTO telefon (marka, model, fiyat) VALUES ('$marka', '$model', '$fiyat')";
+      
+          if (mysqli_query($connection, $sql_telefon)) {
+              $telefon_id = mysqli_insert_id($connection);
+      
+              // Özellikler tablosuna ekleme işlemi
+              $sql_ozellik = "INSERT INTO ozellik (id, ram, hafiza, kamera, ekran_boyutu, islemci) 
+                              VALUES ('$telefon_id' ,'$ram', '$hafiza', '$kamera', '$ekran_boyutu', '$islemci')";
+      
+              if (mysqli_query($connection, $sql_ozellik)) {
+                  // Resimler tablosuna ekleme işlemi
+                  $sql_resimler = "INSERT INTO resimler (id, resim1, resim2, resim3, resim4) 
+                                   VALUES ('$telefon_id', '$resim1', '$resim2', '$resim3', '$resim4')";
+                  
+                  if (mysqli_query($connection, $sql_resimler)) {
+                      header("Location: urun_gor.php?send_id=$telefon_id");
+                      exit();
+                  } else {
+                      echo "<script>alert('Resimler tablosuna kayıt eklenemedi: " . mysqli_error($connection) . "');</script>";
+                  }
+              } else {
+                  echo "<script>alert('Özellikler tablosuna kayıt eklenemedi: " . mysqli_error($connection) . "');</script>";
+              }
           } else {
-            echo "<script>alert('Özellikler tablosuna kayıt eklenemedi: " . mysqli_error($connection) . "');</script>";
+              echo "<script>alert('Telefon tablosuna kayıt eklenemedi: " . mysqli_error($connection) . "');</script>";
           }
-        } else {
-          echo "<script>alert('Telefon tablosuna kayıt eklenemedi: " . mysqli_error($connection) . "');</script>";
-        }
-
-        mysqli_close($connection);
+      
+          mysqli_close($connection);
       }
+      
       ?>
     </div>
   </div>

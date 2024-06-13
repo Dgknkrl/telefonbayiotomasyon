@@ -12,10 +12,10 @@
 <body>
   <div id="container">
     <div id="left_container">
-      <?php include ("../left_bar.php"); ?>
+      <?php include("../left_bar.php"); ?>
     </div>
     <!--Sağ tarafta bulunan gövdenin özellikleri içeriği aşağıda verilmiştir.-->
-    <?php include ("../../../contact/contact.php"); ?>
+    <?php include("../../../contact/contact.php"); ?>
     <div id="right_container" class="admin_container">
       <!--Buraya Ürün Bulmak için kodlar eklendi-->
       <div id="search_div">
@@ -74,7 +74,6 @@
 
 
             // Kartları filtrele
-// Kartları filtrele
             $search_id = isset($_POST["search_id"]) ? $_POST["search_id"] : "";
             $search_town = isset($_POST["search_town"]) ? $_POST["search_town"] : "";
 
@@ -100,11 +99,27 @@
         </div>
       </div>
       <div>
-        <!--Ürün silme-->
+        <!--Depo silme-->
         <div id="warehouse_delete_form">
-          <h4> Depoyu Silmek İstiyor musunuz?</h4>
-          <button onclick="silmeOnayi()">Evet</button>
-          <button onclick="iptal()">Hayır</button>
+          <h4>Silmek İstediğiniz Depo ID'sini Giriniz:</h4>
+          <form id="delete_warehouse_form" method="POST">
+            <input type="text" name="delete_warehouse_id" id="delete_warehouse_id">
+            <button type="submit">Sil</button>
+          </form>
+          <?php
+          if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_warehouse_id"])) {
+            $delete_warehouse_id = $_POST["delete_warehouse_id"];
+
+            // Depo veritabanından silme sorgusu
+            $delete_query = mysqli_query($connection, "DELETE FROM depo WHERE depo_id = '$delete_warehouse_id'");
+
+            if ($delete_query) {
+              echo "<script>alert('Depo başarıyla silindi');</script>";
+            } else {
+              echo "<script>alert('Depo silinirken bir hata oluştu');</script>";
+            }
+          }
+          ?>
         </div>
       </div>
 
@@ -113,10 +128,7 @@
 </body>
 
 </html>
-
-</div>
 <script src="../../js/master_admin.js"></script>
-
 
 </body>
 

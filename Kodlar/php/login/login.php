@@ -27,10 +27,6 @@
         </form>
     </div>
 
-
-
-
-
     <!--Burada script verilmiştir-->
 
     <script>
@@ -38,17 +34,6 @@
             window.location.href = "../register/register.php";
         };
     </script>
-
-
-
-
-
-
-
-
-
-
-
     <!--Burada footer verilmiştir-->
     <footer>
         <?php require ("../footer/footer.php"); ?>

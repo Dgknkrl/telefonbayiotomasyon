@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="../../../../css/master_admin.css">
+  <link rel="stylesheet" href="../../../../css/master_admin2.css">
+
 </head>
 
 <body>
@@ -19,7 +20,7 @@
 
       <!--Buraya Ürün Bulmak için kodlar eklendi-->
       <div id="products_search_warehouse">
-      <h2>DEPO BİLGİLERİNİ GÖRÜNTÜLE</h2>
+        <h2>DEPO BİLGİLERİNİ GÖRÜNTÜLE</h2>
         <form id="warehouse_info_form" method="POST">
           <input type="text" name="search_id" id="search_id" placeholder="Depo ID">
           <input type="text" name="search_town" id="search_town" placeholder="Depo Şehri">
@@ -94,14 +95,64 @@
             echo "<p><strong>Depo Şehri:</strong> " . $depo_sehir . "</p>";
             echo "<p><strong>Stok Miktarı:</strong> " . $stok_miktari . "</p>";
             echo "<p><strong>Telefon Çeşidi Sayısı:</strong>" . $telefon_cesidi_sayisi . "</p>";
-            echo "<button type='button' class='warehouse_button' id='warhouse_exp_" . $depo_id . "'' >Depodaki Ürünleri Gör</button>";
+            echo "<form method='post' action=''>
+            <input type='hidden' name='depo_id' value='" . $depo_id . "'>
+            <button type='submit' class='warehouse_button' id='warehouse_exp_" . $depo_id . "'>Depodaki Ürünleri Gör</button>
+            </form>";
+
             echo "</div>";
-
-
-
           }
+
           ?>
         </div>
+        <?php
+        // Butona tıklanınca depo_id'yi al
+        if (isset($_POST['depo_id'])) {
+          $depo_id = $_POST['depo_id'];
+
+          // Depo_stok tablosundan telefon_id'leri al
+          $sql = "SELECT telefon_id FROM depo_stok WHERE depo_id = $depo_id";
+          $result = $connection->query($sql);
+
+          if ($result->num_rows > 0) {
+            // Tablo başlıkları
+            echo "<div id='table_container'>";
+            echo "<table border='1' id='table_id_120'>";
+            echo "<tr><th>Telefon ID</th><th>Telefon Modeli</th><th>Telefon Adı</th><th>Fiyat</th></tr>";
+
+            // Her bir telefon için
+            while ($row = $result->fetch_assoc()) {
+              $telefon_id = $row["telefon_id"];
+
+              // Telefon tablosundan telefon bilgilerini al
+              $telefon_sql = "SELECT * FROM telefon WHERE telefon_id = $telefon_id";
+              $telefon_result = $connection->query($telefon_sql);
+
+              if ($telefon_result->num_rows > 0) {
+                // Her bir telefonun bilgilerini tabloya ekle
+                while ($telefon_row = $telefon_result->fetch_assoc()) {
+
+                  echo "<tr id='table_id'>";
+                  echo "<td>" . $telefon_row["telefon_id"] . "</td>";
+                  echo "<td>" . $telefon_row["marka"] . "</td>";
+                  echo "<td>" . $telefon_row["model"] . "</td>";
+                  echo "<td>" . $telefon_row["fiyat"] . "</td>";
+                  echo "</tr>"; 
+                }
+              } else {
+                echo "Telefon bulunamadı";
+              }
+            }
+            echo "</table>";
+            echo "</div>";
+          } else {
+            echo "Depoda ürün bulunamadı";
+          }
+        }
+
+        // Veritabanı bağlantısını kapat
+        $connection->close();
+        ?>
       </div>
     </div>
   </div>

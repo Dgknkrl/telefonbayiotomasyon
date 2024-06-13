@@ -1,95 +1,91 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;   
-}
-*::selection{
-    background-color: #a7fdad;
-    color: black;
-}
-::-webkit-scrollbar{
-    display: none;
-}
-#nav_div{
-    margin: 20px auto;
-    width: 80%;
+#products_body_div {
+    margin: auto;
+    margin-top: 100px;
+    max-width: 1200px;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
-    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 70%;
 }
-
-#logo{
-    width: 45px;
-    border-radius: 10px;
-    height: auto;
-}
-
-#nav_div ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-#nav_div ul li {
-    margin: 10px;
-    margin-right: 20px;
-}
-
-ul li a {
-    background-color: #4CAF50;
-    color: white;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    text-decoration: none;
-}
-
-ul li a:hover{
-    background-color: #45a049;
-}
-
-#log_in{
-    margin-left: 20px;
-}
-
-
-#advert_banner_home{
-    border: 1px solid #45a049;
-    width: 80%;
+#banner_div{
+    width: 70%;
     height: 700px;
-    margin: 100px auto;
-    border-radius: 20px;
-}
-#banner_home{
-    width: 100%;
-    height: 100%;
-}
-
-#products_home{
-    margin: 300px auto;
-    border: 1px solid #45a049;
-    width: 80%;
-    text-align: center;
-}
-
-.product{
     border: 1px solid black;
-    margin-top: 0px;
-    margin-bottom: 100px;
-    margin-left: 0px;
-    margin-right: 80px;
-    display: inline-block;
-    width: 230px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 10px;
 }
 
+.card {
+    width: calc(25% - 20px); /* Genişlik hesaplama: 3 kart yan yana sığacak şekilde */
+    margin: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Kart arka plan rengi */
+    border: 1px solid #ddd; /* Kart kenarlık */
+    border-radius: 20px; /* Kart köşeleri yuvarlatma */
+    padding: 10px; /* Kart iç içe padding */
+}
+#products_body_div .card:hover{
+    cursor: pointer;
+}
+.card p{
+    padding: 0px;
+    margin: 1px;
+}
+.card img{
+    margin: auto;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    height: 280px;
+}
+.card h3{
+    margin-top: 2px;
+    margin-bottom: 7px;
+}
+.card #phone_price_h3{
+    margin: auto;
+    padding: 3px;
+    margin-top: 15px;
+    border: 1px solid black;
+    width: 100px;
+    border-radius: 10px;
+}
 
+#products_body_div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#product_fiyat{
+    margin: auto;
+    padding: 5px;
+    margin-top: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 100px;
+    
+}
+#sort_svg{
+    width: 20px;
+}
+#filter_svg{
+    width: 28px;
+}
+/* Kartlar için medya sorguları */
+@media screen and (max-width: 992px) {
+    .card {
+        width: calc(50% - 20px); /* 2 kart yan yana sığacak şekilde */
+    }
+}
 
-
-
-
-
-
-
+@media screen and (max-width: 768px) {
+    .card {
+        width: calc(100% - 20px); /* Kartlar tek sıra halinde sığacak şekilde */
+    }
+}
+#banner_img{
+    height: 100%;
+    width: 100%;
+}

@@ -27,6 +27,5 @@
         <li><a href="../hesap_islem/hesap_degis.php">Hesap Değiştir</a></li>
         <li><a href="../hesap_islem/hesap_ekle.php">Hesap Ekleme</a></li>
         <li><a href="../hesap_islem/hesap_sil.php">Hesap Silme</a></li>
-        <li><a href="../hesap_islem/hesap_destek.php">Destek</a></li>
-        <li><a href="../hesap_islem/hesap_cikis.php">Çıkış Yap</a></li>
+        <li><a href="../hesap_islem/cikis_yap.php">Çıkış Yap</a></li>
       </ul>

@@ -23,9 +23,8 @@ $birthday = $_POST["register_birthday"];
 $hesap_tipi = $_POST["hesap_tipi"];
 
 // Şifreyi hashleme
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 // Kayıt sorgusu
-$sql = "INSERT INTO $dbtable (ad, soyad, email, sifre, dogum_gunu, adres, hesap_tipi) VALUES ('$name', '$surname', '$email', '$hashedPassword', '$birthday', '$adres', '$hesap_tipi')";
+$sql = "INSERT INTO $dbtable (ad, soyad, email, sifre, dogum_gunu, adres, hesap_tipi) VALUES ('$name', '$surname', '$email', '$password', '$birthday', '$adres', '$hesap_tipi')";
 // Sorgunun çalıştırılması
 if (mysqli_query($dbConn, $sql)) {
     echo "<script>alert('Kayıt Başarılı. Lütfen Giriş Yapın...');</script>";
